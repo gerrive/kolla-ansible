@@ -39,20 +39,21 @@ Options:
     --verbose, -v                      Increase verbosity of ansible-playbook
 
 Commands:
-    prechecks           Do pre-deployment checks for hosts
-    mariadb_recovery    Recover a completely stopped mariadb cluster
-    bootstrap-servers   bootstrap servers with kolla deploy dependencies
-    destroy             Destroy Kolla containers, volumes and host configuration
-                        (--include-images to also destroy Kolla images)
-    deploy              Deploy and start all kolla containers
-    deploy-bifrost      Deploy and start bifrost container
-    deploy-servers      Enroll and deploy servers with bifrost
-    post-deploy         Do post deploy on deploy node
-    pull                Pull all images for containers (only pulls, no running container changes)
-    reconfigure         Reconfigure OpenStack service
-    certificates        Generate self-signed certificate for TLS *For Development Only*
-    upgrade             Upgrades existing OpenStack Environment
-    genconfig           Generate configuration files for enabled OpenStack services
+    prechecks                   Do pre-deployment checks for hosts
+    mariadb_recovery            Recover a completely stopped mariadb cluster
+    bootstrap-servers           bootstrap servers with kolla deploy dependencies
+    destroy                     Destroy Kolla containers, volumes and host configuration
+                                (--include-images to also destroy Kolla images)
+    deploy, deploy-openstack    Deploy and start all kolla containers
+    deploy-bifrost              Deploy and start bifrost container
+    deploy-openstack            Deploy and start all kolla containers
+    deploy-servers              Enroll and deploy servers with bifrost
+    post-deploy                 Do post deploy on deploy node
+    pull                        Pull all images for containers (only pulls, no running container changes)
+    reconfigure                 Reconfigure OpenStack service
+    certificates                Generate self-signed certificate for TLS *For Development Only*
+    upgrade                     Upgrades existing OpenStack Environment
+    genconfig                   Generate configuration files for enabled OpenStack services
 EOF
 }
 
@@ -179,10 +180,15 @@ EOF
 (deploy)
         ACTION="Deploying Playbooks"
         EXTRA_OPTS="$EXTRA_OPTS -e action=deploy"
+        cat "heelo"
         ;;
 (deploy-bifrost)
         ACTION="Deploying Bifrost"
         PLAYBOOK="${BASEDIR}/ansible/bifrost.yml"
+        EXTRA_OPTS="$EXTRA_OPTS -e action=deploy"
+        ;;
+(deploy-openstack)
+        ACTION="Deploying Playbooks"
         EXTRA_OPTS="$EXTRA_OPTS -e action=deploy"
         ;;
 (deploy-servers)
